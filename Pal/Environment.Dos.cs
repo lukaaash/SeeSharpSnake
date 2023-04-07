@@ -4,6 +4,8 @@ namespace System
 {
     static class Environment
     {
+        public static void FailFast(string message) { while (true) ; }
+
         public static unsafe long TickCount64
         {
             // Mark no inlining so that we get "volatile" semantics

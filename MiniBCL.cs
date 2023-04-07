@@ -58,6 +58,16 @@ namespace System
     public struct RuntimeFieldHandle { }
 
     public class Attribute { }
+
+    public enum AttributeTargets { }
+
+    public class AttributeUsageAttribute : Attribute
+    {
+        public AttributeUsageAttribute(AttributeTargets validOn) { }
+
+        public bool AllowMultiple { get; set; }
+        public bool Inherited { get; set; }
+    }
 }
 
 namespace System.Runtime.CompilerServices
@@ -117,5 +127,31 @@ namespace Internal.Runtime.CompilerServices
         // It will do what Unsafe.Add is expected to do. It's just not possible to express it in C#.
         [System.Runtime.CompilerServices.Intrinsic]
         public static extern ref T Add<T>(ref T source, int elementOffset);
+    }
+}
+
+namespace Internal.Runtime.CompilerHelpers
+{
+    internal class ThrowHelpers
+    {
+        private static void ThrowInvalidProgramException()
+        {
+            System.Environment.FailFast(null);
+        }
+
+        private static void ThrowInvalidProgramExceptionWithArgument(Internal.TypeSystem.ExceptionStringID id, string methodName)
+        {
+            System.Environment.FailFast(null);
+        }
+    }
+}
+
+namespace Internal.TypeSystem
+{
+    /// <summary>
+    /// Represents an ID of a localized exception string.
+    /// </summary>
+    public enum ExceptionStringID
+    {
     }
 }

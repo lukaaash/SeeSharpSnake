@@ -3,3 +3,5 @@ csc.exe /O /noconfig /nostdlib /runtimemetadataversion:v4.0.30319 MiniRuntime.cs
 ilc.exe zerosnake.ilexe -o zerosnake.obj --directpinvoke:main --systemmodule:zerosnake --Os -g --targetarch x86 --instruction-set base
 
 tasm32 /ml main.asm
+
+wlink system dos32a name snake.exe file zerosnake.obj,main.obj

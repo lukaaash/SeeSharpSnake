@@ -21,7 +21,7 @@ namespace System.Threading
                 // Call the helper we placed on the stack to halt the processor
                 // for a little bit.
                 // (Security people are crying in a corner right now).
-                ClassConstructorRunner.Call<int>(new IntPtr(&hlt));
+                ClassConstructorRunner.Call(new IntPtr(&hlt));
             }
         }
     }

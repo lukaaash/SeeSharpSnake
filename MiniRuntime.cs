@@ -13,6 +13,16 @@ namespace Internal.Runtime.CompilerHelpers
         static void RhpPinvoke(System.IntPtr frame) { }
         [System.Runtime.RuntimeExport("RhpPInvokeReturn")]
         static void RhpPinvokeReturn(System.IntPtr frame) { }
+        [System.Runtime.RuntimeExport("RhpReversePInvoke")]
+        static void RhpReversePInvoke(System.IntPtr frame) { }
+        [System.Runtime.RuntimeExport("RhpReversePInvokeReturn")]
+        static void RhpReversePInvokeReturn(System.IntPtr frame) { }
+
+        [System.Runtime.RuntimeExport("RhpFallbackFailFast")]
+        static void RhpFallbackFailFast()
+        {
+            System.Environment.FailFast(null);
+        }
     }
 }
 
@@ -71,12 +81,11 @@ namespace System.Runtime.CompilerServices
             context.initialized = 1;
 
             // Run the class constructor.
-            Call<int>(context.cctorMethodAddress);
+            Call(context.cctorMethodAddress);
         }
 
-        // This is a special compiler intrinsic that calls method pointed to by pfn.
-        [System.Runtime.CompilerServices.Intrinsic]
-        public static extern T Call<T>(System.IntPtr pfn);
+        [System.Runtime.InteropServices.DllImport("main", EntryPoint = "_call")]
+        public static extern int Call(IntPtr address);
     }
 
     // This data structure is a contract with the compiler. It holds the address of a static

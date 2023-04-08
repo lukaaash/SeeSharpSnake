@@ -38,7 +38,7 @@ namespace System
                 // int 21h
                 // ret
                 byte* pCode = stackalloc byte[] { 0xB4, 0x0B, 0xCD, 0x21, 0xC3 };
-                return ClassConstructorRunner.Call<byte>(new IntPtr(pCode)) != 0;
+                return (ClassConstructorRunner.Call(new IntPtr(pCode)) & 0xFF) != 0;
             }
         }
 
@@ -48,7 +48,7 @@ namespace System
             // int 21h
             // ret
             byte* pCode = stackalloc byte[] { 0xB4, 0x08, 0xCD, 0x21, 0xC3 };
-            char c = (char)ClassConstructorRunner.Call<byte>(new IntPtr(pCode));
+            char c = (char)(ClassConstructorRunner.Call(new IntPtr(pCode)) & 0xFF);
 
             // Interpret WASD as arrow keys.
             ConsoleKey k = default;

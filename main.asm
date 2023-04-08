@@ -9,6 +9,9 @@ stub:
         jmp     main
         db      'WATCOM' ; needed by DOS/4GW, but not by DOS/32A or PMODE/W
 main:
+        mov     ax, ds
+        mov     es, ax
+
         push    0
         push    0
         call    near ptr __managed__Main

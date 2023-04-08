@@ -45,7 +45,7 @@ namespace System
             [System.Runtime.CompilerServices.Intrinsic]
             get
             {
-                return Internal.Runtime.CompilerServices.Unsafe.Add(ref _firstChar, index);
+                fixed (char* firstCharPointer = &_firstChar) return *(firstCharPointer + index);
             }
         }
     }
@@ -119,6 +119,8 @@ namespace System.Runtime.InteropServices
         public StructLayoutAttribute(LayoutKind layoutKind) { }
     }
 }
+
+/*
 namespace Internal.Runtime.CompilerServices
 {
     public static unsafe partial class Unsafe
@@ -129,6 +131,7 @@ namespace Internal.Runtime.CompilerServices
         public static extern ref T Add<T>(ref T source, int elementOffset);
     }
 }
+*/
 
 namespace Internal.Runtime.CompilerHelpers
 {

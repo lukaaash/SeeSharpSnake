@@ -52,6 +52,8 @@ struct Game
                         s.Course = Snake.Direction.Left; break;
                     case ConsoleKey.RightArrow:
                         s.Course = Snake.Direction.Right; break;
+                    case ConsoleKey.X:
+                        Environment.Exit(0); break;
                 }
             }
 

@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace System
 {
@@ -30,25 +31,17 @@ namespace System
         }
 
 
-        public static unsafe bool KeyAvailable
-        {
-            get
-            {
-                // mov ah,0Bh
-                // int 21h
-                // ret
-                byte* pCode = stackalloc byte[] { 0xB4, 0x0B, 0xCD, 0x21, 0xC3 };
-                return (ClassConstructorRunner.Call(new IntPtr(pCode)) & 0xFF) != 0;
-            }
-        }
+        [DllImport("main", EntryPoint = "_keyavail")]
+        private static extern byte keyavail();
+
+        public static unsafe bool KeyAvailable => keyavail() != 0;
+
+        [DllImport("main", EntryPoint = "_readkey")]
+        private static extern byte readkey();
 
         public static unsafe ConsoleKeyInfo ReadKey(bool intercept)
         {
-            // mov ah,08h
-            // int 21h
-            // ret
-            byte* pCode = stackalloc byte[] { 0xB4, 0x08, 0xCD, 0x21, 0xC3 };
-            char c = (char)(ClassConstructorRunner.Call(new IntPtr(pCode)) & 0xFF);
+            char c = (char)(int)readkey();
 
             // Interpret WASD as arrow keys.
             ConsoleKey k = default;
@@ -60,6 +53,8 @@ namespace System
                 k = ConsoleKey.DownArrow;
             else if (c == 'a')
                 k = ConsoleKey.LeftArrow;
+            else if (c == 'x')
+                k = ConsoleKey.X;
 
             return new ConsoleKeyInfo(c, k, false, false, false);
         }

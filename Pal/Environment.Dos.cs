@@ -1,10 +1,19 @@
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace System
 {
     static class Environment
     {
-        public static void FailFast(string message) { while (true) ; }
+        public static void FailFast(string message) => Exit(255);
+
+        [DllImport("main", EntryPoint = "_exit")]
+        private static extern byte exit(byte code);
+
+        public static void Exit(int exitCode)
+        {
+            exit((byte)(exitCode & 0xFF));
+        }
 
         public static unsafe long TickCount64
         {

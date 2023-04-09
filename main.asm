@@ -18,6 +18,36 @@ main:
         mov     ah, 4Ch
         int     21h
 
+public _exit
+_exit proc
+        pop eax
+        pop eax
+        mov ah, 4Ch
+        int 21h
+endp _exit
+
+public _halt
+_halt proc
+        hlt
+        ret
+endp _halt
+
+public _keyavail
+_keyavail proc
+        mov ah, 0Bh
+        int 21h
+        and eax, 0FFh
+        ret
+endp _keyavail
+
+public _readkey
+_readkey proc
+        mov ah, 08h
+        int 21h
+        and eax, 0FFh
+        ret
+endp _readkey
+
 public  _call
         _call proc
         pop     ecx

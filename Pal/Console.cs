@@ -13,6 +13,7 @@ namespace System
         UpArrow = 38,
         RightArrow = 39,
         DownArrow = 40,
+        X = 88,
     }
 
     public readonly struct ConsoleKeyInfo

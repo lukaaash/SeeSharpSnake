@@ -4,4 +4,7 @@ ilc.exe zerosnake.ilexe -o zerosnake.obj --directpinvoke:main --systemmodule:zer
 
 tasm32 /ml main.asm
 
-wlink system dos32a name snake.exe file zerosnake.obj,main.obj
+wlink system pmodew name snake.exe file zerosnake.obj,main.obj
+
+@echo Run this in DOS to produce a 14369-byte long executable:
+@echo pmwlite /C4 snake.exe
